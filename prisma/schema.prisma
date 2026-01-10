@@ -1,0 +1,33 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  // .env dosyasındaki linki kullanacak
+  url      = env("DATABASE_URL")
+}
+
+// Fiyat Paketleri Modeli
+model PricingPackage {
+  id          String   @id @default(cuid()) // Benzersiz ID (örn: clq123...)
+  title       String   // Başlık: "Standart Paket"
+  description String   // Açıklama: "Orta seviye..."
+  price       Int      // Fiyat: 1200
+  unit        String   // Birim: "/ Aylık"
+  features    String[] // Özellikler: ["Kask dahil", "Haftada 2 gün"] (Array)
+  isPopular   Boolean  @default(false) // Popüler mi?
+  buttonText  String   @default("Satın Al")
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Yönetici Kullanıcı Modeli (Giriş yapabilmen için)
+model AdminUser {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // Şifreli (Hashed) tutulacak
+}
