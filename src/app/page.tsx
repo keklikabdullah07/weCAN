@@ -6,14 +6,15 @@ import { Pricing } from "@/components/sections/pricing";
 
 export default function Home() {
   return (
-    // items-center ve justify-between KALKTI.
-    // Artık bölümler tam genişlik (full width) olacak.
-    <main className="flex min-h-screen flex-col bg-slate-950">
+    // DEĞİŞEN KISIM: bg-slate-950 -> bg-white yaptık.
+    <main className="flex min-h-screen flex-col bg-white">
+      
       <Hero />
       <About />
       <Pricing />
       <Features />
       <Contact />
+      
     </main>
   );
 }
