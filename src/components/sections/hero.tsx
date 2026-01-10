@@ -22,7 +22,11 @@ export function Hero() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 20 },
+      transition: {
+        type: "spring" as const, // <--- İŞTE ÇÖZÜM BURADA: 'as const' ekledik
+        stiffness: 100,
+        damping: 20,
+      },
     },
   };
 
