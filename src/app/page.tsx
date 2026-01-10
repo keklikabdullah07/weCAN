@@ -6,11 +6,10 @@ import { Pricing } from "@/components/sections/pricing";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between bg-slate-950">
-      {/* Sadece Hero bileşeni hazır olduğu için şimdilik bunu açıyoruz */}
+    // items-center ve justify-between KALKTI.
+    // Artık bölümler tam genişlik (full width) olacak.
+    <main className="flex min-h-screen flex-col bg-slate-950">
       <Hero />
-
-      {/* Diğer bölümler hazır oldukça yorum satırlarını kaldırırsın */}
       <About />
       <Pricing />
       <Features />
