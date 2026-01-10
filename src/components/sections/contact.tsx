@@ -55,7 +55,7 @@ export function Contact() {
               <p className="text-indigo-200 mb-8">Sorularınızı bekliyorum.</p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
-                  <Mail className="text-orange-400"/> info@skateprocan.com
+                  <Mail className="text-orange-400"/> info@weCANcan.com
                 </div>
                 <div className="flex items-center gap-4">
                   <Phone className="text-orange-400"/> +90 546 449 28 80

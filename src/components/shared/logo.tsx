@@ -6,7 +6,7 @@ interface LogoProps {
 
 export const Logo = ({ className }: LogoProps) => {
   // Benzersiz ID kullanımı önemli (sayfada başka gradientlerle çakışmaması için)
-  const gradientId = "skatepro-flow-gradient";
+  const gradientId = "weCAN-flow-gradient";
 
   return (
     <svg

@@ -7,7 +7,7 @@ import { Footer } from "@/components/layout/footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "SkatePro - Özgürlüğe Sür",
+  title: "weCAN - Özgürlüğe Sür",
   description: "Profesyonel Paten Eğitimi",
 };
 

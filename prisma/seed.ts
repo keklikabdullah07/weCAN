@@ -13,15 +13,15 @@ async function main() {
   const hashedPassword = await bcrypt.hash("123456", 10) // Şifre: 123456
 
   await prisma.adminUser.upsert({
-    where: { email: 'admin@skatepro.com' },
+    where: { email: 'admin@weCAN.com' },
     update: {},
     create: {
-      email: 'admin@skatepro.com',
+      email: 'admin@weCAN.com',
       password: hashedPassword,
     },
   })
 
-  console.log("✅ Admin kullanıcısı (admin@skatepro.com) oluşturuldu!")
+  console.log("✅ Admin kullanıcısı (admin@weCAN.com) oluşturuldu!")
   
   // Paketler zaten varsa tekrar ekleme yapmıyoruz...
 }

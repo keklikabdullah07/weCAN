@@ -26,7 +26,7 @@ export async function sendEmail(prevState: any, formData: FormData) {
     });
 
     const mailOptions = {
-      from: `"SkatePro İletişim" <${process.env.GMAIL_USER}>`,
+      from: `"weCAN İletişim" <${process.env.GMAIL_USER}>`,
       to: process.env.GMAIL_USER,
       replyTo: email,
       subject: `Yeni Öğrenci: ${name} ${surname} (${course})`, // Konuya dersi de ekledim

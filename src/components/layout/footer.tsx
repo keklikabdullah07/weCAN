@@ -97,11 +97,11 @@ export function Footer() {
               </Link>
             </div>
             <a
-              href="mailto:info@skatepro.com"
+              href="mailto:info@weCAN.com"
               className="flex items-center gap-2 text-sm text-gray-500 hover:text-indigo-600 transition"
             >
               <Mail className="h-4 w-4" />
-              info@skatepro.com
+              info@weCAN.com
             </a>
           </div>
         </div>
