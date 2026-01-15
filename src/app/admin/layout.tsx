@@ -134,7 +134,7 @@ export default function AdminLayout({
       <main className="flex-1 flex flex-col h-screen overflow-hidden md:ml-72">
         {/* Topbar */}
         <header className="h-20 bg-[#0f172a]/90 backdrop-blur-md border-b border-slate-800 flex items-center justify-between px-8 z-10 sticky top-0">
-          <div className="flex items-center gap-4 text-slate-400">
+          {/* <div className="flex items-center gap-4 text-slate-400">
             <Search size={20} />
             <input
               type="text"
@@ -148,11 +148,10 @@ export default function AdminLayout({
               <span className="absolute top-1.5 right-2 w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
             </button>
             <div className="w-px h-8 bg-slate-800 mx-2"></div>
-            {/* Bu buton şimdilik boş, ileride "Hızlı Ekle" menüsü yapılabilir */}
             <button className="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-emerald-500/20 transition-all">
               + Hızlı İşlem
             </button>
-          </div>
+          </div> */}
         </header>
 
         {/* Scroll Edilebilir İçerik Alanı */}
