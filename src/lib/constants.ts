@@ -7,6 +7,7 @@ export const NAV_LINKS = [
   { href: '#courses', label: 'Dersler' },
   { href: '#features', label: 'Neden Ben?' },
   { href: '#contact', label: 'İletişim' },
+  { href: '#gallery', label: 'Galeri' },
 ];
 
 // İstatistikler

@@ -12,6 +12,7 @@ import {
   Zap,
   MessageCircle,
   ChevronRight,
+  Image,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,6 +25,7 @@ import {
   SheetClose,
 } from "@/components/ui/sheet";
 import { Logo } from "@/components/shared/logo";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { href: "/", label: "Ana Sayfa", icon: Home },
@@ -31,9 +33,14 @@ const NAV_ITEMS = [
   { href: "#courses", label: "Ders Paketleri", icon: Package },
   { href: "#features", label: "Neden Ben?", icon: Zap },
   { href: "#contact", label: "İletişim", icon: MessageCircle },
+  { href: "#gallery", label: "Galeri", icon: Image },
 ];
 
 export function Header() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/70 backdrop-blur-xl transition-all">
       <div className="container mx-auto flex h-20 items-center justify-between px-4">
