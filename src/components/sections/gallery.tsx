@@ -4,36 +4,53 @@ import { motion } from "framer-motion";
 import { ImageIcon } from "lucide-react";
 import Image from "next/image";
 
-// Rastgele paten görselleri (Unsplash'tan)
-const images = [
+// Props Tanımı
+interface GalleryProps {
+  images?: {
+    id: string;
+    src: string;
+    alt: string;
+    className: string;
+  }[] | null;
+}
+
+// Varsayılan Resimler
+const defaultImages = [
   {
-    src: "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&q=80&w=800",
-    alt: "Paten Eğitimi Başlangıç",
-    className: "md:col-span-2 md:row-span-2", // Büyük resim
+    id: "def1",
+    src: "https://images.unsplash.com/photo-1552318415-bc6d50100d3d?auto=format&fit=crop&q=80&w=800",
+    alt: "Paten Eğitimi",
+    className: "md:col-span-2 md:row-span-2",
   },
   {
-    src: "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&q=80&w=800",
-    alt: "Sahilde Sürüş",
+    id: "def2",
+    src: "https://images.unsplash.com/photo-1502014822147-1aed80671e0a?auto=format&fit=crop&q=80&w=800",
+    alt: "Sahil",
     className: "md:col-span-1 md:row-span-1",
   },
   {
+    id: "def3",
     src: "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&q=80&w=800",
-    alt: "Akrobasi Denemeleri",
+    alt: "Akrobasi",
     className: "md:col-span-1 md:row-span-1",
   },
   {
-    src: "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&q=80&w=800",
-    alt: "Grup Dersi",
+    id: "def4",
+    src: "https://images.unsplash.com/photo-1565128939626-4e50d1cb801f?auto=format&fit=crop&q=80&w=800",
+    alt: "Grup",
     className: "md:col-span-1 md:row-span-1",
   },
   {
-    src: "https://images.unsplash.com/photo-1471513671800-b09c87e1497c?auto=format&fit=crop&q=80&w=800",
-    alt: "Gece Sürüşü",
+    id: "def5",
+    src: "https://images.unsplash.com/photo-1534335552399-57788107954a?auto=format&fit=crop&q=80&w=800",
+    alt: "Gece",
     className: "md:col-span-1 md:row-span-1",
   },
 ];
 
-export function Gallery() {
+export function Gallery({ images }: GalleryProps) {
+  const displayImages = (images && images.length > 0) ? images : defaultImages;
+
   return (
     <section id="gallery" className="py-20 bg-white text-slate-900">
       <div className="container mx-auto px-4">
@@ -52,16 +69,22 @@ export function Gallery() {
           </p>
         </div>
 
-        {/* Galeri Grid Yapısı */}
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-2 gap-4 h-[800px] md:h-[600px]">
-          {images.map((img, index) => (
+        {/* 👇 GÜNCELLENEN KISIM BURASI 👇
+            - h-[800px] ve md:h-[600px] SİLİNDİ (Artık yükseklik serbest)
+            - md:grid-rows-2 SİLİNDİ (Satır sayısı serbest)
+            - auto-rows-[300px] EKLENDİ (Her yeni satır 300px yüksekliğinde olacak)
+        */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 auto-rows-[300px]">
+          {displayImages.map((img, index) => (
             <motion.div
-              key={index}
+              key={img.id}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className={`relative rounded-3xl overflow-hidden group ${img.className}`}
+              // className içindeki col-span ayarları veritabanından geliyor, 
+              // ama row-span-2 dediğimizde artık 300px * 2 = 600px yer kaplayacak
+              className={`relative rounded-3xl overflow-hidden group min-h-[300px] ${img.className}`}
             >
               <Image
                 src={img.src}

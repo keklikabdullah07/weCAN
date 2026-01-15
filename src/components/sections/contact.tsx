@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
-// Select bileşenlerini import ediyoruz
 import {
   Select,
   SelectContent,
@@ -19,14 +18,37 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import Link from "next/link";
 
 const initialState = {
   success: false,
   message: "",
 };
 
-export function Contact() {
+// Props Tanımı
+interface ContactProps {
+  content?: {
+    email: string;
+    phone: string;
+    address: string;
+    instagram: string;
+    twitter: string;
+    facebook: string;
+  } | null;
+}
+
+export function Contact({ content }: ContactProps) {
   const [state, formAction, isPending] = useActionState(sendEmail, initialState);
+
+  // Varsayılan Değerler (Fallback)
+  const info = {
+    email: content?.email || "info@weCANcan.com",
+    phone: content?.phone || "+90 546 449 28 80",
+    address: content?.address || "Kadıköy, İstanbul",
+    instagram: content?.instagram || "#",
+    twitter: content?.twitter || "#",
+    facebook: content?.facebook || "#",
+  };
 
   return (
     <section id="contact" className="py-24 relative overflow-hidden bg-gray-50">
@@ -44,35 +66,51 @@ export function Contact() {
         </div>
 
         <Card className="overflow-hidden shadow-2xl shadow-indigo-100 border-none rounded-[2.5rem] bg-white flex flex-col lg:flex-row max-w-6xl mx-auto min-h-[600px]">
-          {/* SOL TARAF (Bilgiler) */}
+          {/* SOL TARAF (DİNAMİK BİLGİLER) */}
           <div className="bg-indigo-900 p-10 md:p-16 text-white lg:w-5/12 flex flex-col justify-between relative overflow-hidden">
              {/* ... Dekorasyonlar ... */}
              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
              <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
 
-            <div>
+            <div className="relative z-10">
               <h3 className="text-2xl font-bold mb-6">İletişim</h3>
               <p className="text-indigo-200 mb-8">Sorularınızı bekliyorum.</p>
               <div className="space-y-6">
-                <div className="flex items-center gap-4">
-                  <Mail className="text-orange-400"/> info@weCANcan.com
+                <div className="flex items-center gap-4 group">
+                  <div className="p-3 bg-white/10 rounded-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                     <Mail size={20} className="text-orange-400 group-hover:text-white"/> 
+                  </div>
+                  <span className="font-medium">{info.email}</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <Phone className="text-orange-400"/> +90 546 449 28 80
+                <div className="flex items-center gap-4 group">
+                  <div className="p-3 bg-white/10 rounded-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                    <Phone size={20} className="text-orange-400 group-hover:text-white"/>
+                  </div>
+                  <span className="font-medium">{info.phone}</span>
                 </div>
-                <div className="flex items-center gap-4">
-                  <MapPin className="text-orange-400"/> Kadıköy, İstanbul
+                <div className="flex items-center gap-4 group">
+                  <div className="p-3 bg-white/10 rounded-lg group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                    <MapPin size={20} className="text-orange-400 group-hover:text-white"/>
+                  </div>
+                  <span className="font-medium">{info.address}</span>
                 </div>
               </div>
             </div>
-            <div className="mt-12 flex gap-4">
-              <Instagram size={20} className="hover:text-orange-400 cursor-pointer transition-colors"/> 
-              <Twitter size={20} className="hover:text-orange-400 cursor-pointer transition-colors"/> 
-              <Facebook size={20} className="hover:text-orange-400 cursor-pointer transition-colors"/>
+
+            <div className="mt-12 flex gap-4 relative z-10">
+              <Link href={info.instagram} target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-white hover:text-indigo-900 hover:-translate-y-1 transition-all duration-300">
+                 <Instagram size={20} /> 
+              </Link>
+              <Link href={info.twitter} target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-white hover:text-indigo-900 hover:-translate-y-1 transition-all duration-300">
+                 <Twitter size={20} /> 
+              </Link>
+              <Link href={info.facebook} target="_blank" className="p-3 bg-white/5 rounded-full hover:bg-white hover:text-indigo-900 hover:-translate-y-1 transition-all duration-300">
+                 <Facebook size={20} />
+              </Link>
             </div>
           </div>
 
-          {/* SAĞ TARAF (FORM) */}
+          {/* SAĞ TARAF (FORM - AYNI KALDI) */}
           <div className="p-10 md:p-16 lg:w-7/12 bg-white flex flex-col justify-center">
             {state.success ? (
               <motion.div
@@ -114,17 +152,14 @@ export function Contact() {
                         <Input name="email" type="email" placeholder="ornek@email.com" required className="bg-gray-50 h-12 rounded-xl" />
                     </div>
                     
-                    {/* YENİ: TELEFON ALANI */}
                     <div className="space-y-2">
                         <label className="text-sm font-semibold ml-1">Telefon</label>
                         <Input name="phone" type="tel" placeholder="0555 123 45 67" required className="bg-gray-50 h-12 rounded-xl" />
                     </div>
                 </div>
 
-                {/* YENİ: DERS SEÇİMİ (SELECT) */}
                 <div className="space-y-2">
                     <label className="text-sm font-semibold ml-1">İlgilendiğiniz Ders</label>
-                    {/* Select bileşeni 'name' prop'u sayesinde FormData'ya değer gönderir */}
                     <Select name="course" required>
                         <SelectTrigger className="bg-gray-50 h-12 rounded-xl w-full">
                             <SelectValue placeholder="Bir paket seçin" />

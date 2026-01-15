@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <Header />
         {/* Bütün sayfalar bu body'nin içine yerleşecek */}
         {children}
+        <Toaster position="top-center" richColors closeButton />
         <Footer />
       </body>
     </html>

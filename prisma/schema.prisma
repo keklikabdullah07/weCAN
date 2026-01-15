@@ -6,28 +6,94 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // .env dosyasındaki linki kullanacak
   url      = env("DATABASE_URL")
 }
 
-// Fiyat Paketleri Modeli
+// 1. Fiyat Paketleri Modeli
 model PricingPackage {
-  id          String   @id @default(cuid()) // Benzersiz ID (örn: clq123...)
-  title       String   // Başlık: "Standart Paket"
-  description String   // Açıklama: "Orta seviye..."
-  price       Int      // Fiyat: 1200
-  unit        String   // Birim: "/ Aylık"
-  features    String[] // Özellikler: ["Kask dahil", "Haftada 2 gün"] (Array)
-  isPopular   Boolean  @default(false) // Popüler mi?
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  price       Int
+  unit        String   @default("/ Aylık")
+  features    String[]
+  isPopular   Boolean  @default(false)
   buttonText  String   @default("Satın Al")
   
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
 
-// Yönetici Kullanıcı Modeli (Giriş yapabilmen için)
+// 2. Yönetici Kullanıcı Modeli
 model AdminUser {
+  id       String @id @default(cuid())
+  email    String @unique
+  password String
+}
+
+// 3. Ana Sayfa (Hero) Modeli
+model HeroSection {
+  id          String   @id @default(cuid())
+  badge       String   @default("Pro Eğitmenle Tanışın")
+  title       String   @default("Özgürlüğe Giden Yolu Patenle Keşfet.")
+  description String   @default("Kişiye özel derslerle dengenizi bulun, korkularınızı yenin.")
+  buttonText  String   @default("Dersleri İncele")
+  
+  updatedAt   DateTime @updatedAt
+}
+
+// 4. Hakkımda (About) Modeli
+model AboutSection {
+  id          String   @id @default(cuid())
+  title       String   @default("Paten Kaymak Sadece Bir Spor Değil, Bir Özgürlüktür.")
+  description String   @default("Merhaba! Ben Can. 10 yılı aşkın süredir...")
+  imageUrl    String   @default("/file.jpg")
+  
+  // İstatistikler
+  students    String   @default("500+")
+  hours       String   @default("2000+")
+  experience  String   @default("10+")
+  
+  // Özellikler Listesi
+  features    String[] 
+  
+  updatedAt   DateTime @updatedAt
+}
+
+// 5. Galeri Modeli
+model GalleryImage {
   id        String   @id @default(cuid())
-  email     String   @unique
-  password  String   // Şifreli (Hashed) tutulacak
+  src       String   // Resim linki
+  alt       String   // Resim açıklaması
+  className String   @default("md:col-span-1 md:row-span-1") // Boyut ayarı
+  
+  createdAt DateTime @default(now())
+}
+// Mevcut modellerin altına ekle:
+
+model FeatureItem {
+  id          String   @id @default(cuid())
+  icon        String   // İkon adı (Örn: "Shield", "Users")
+  title       String
+  description String
+  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Mevcut modellerin altına ekle:
+
+model ContactSettings {
+  id          String   @id @default(cuid())
+  email       String   @default("info@wecancan.com")
+  phone       String   @default("+90 555 123 45 67")
+  address     String   @default("Kadıköy, İstanbul")
+  googleMap   String?  // Harita linki (Opsiyonel)
+  
+  // Sosyal Medya Linkleri
+  instagram   String   @default("https://instagram.com")
+  twitter     String   @default("https://twitter.com")
+  facebook    String   @default("https://facebook.com")
+  
+  updatedAt   DateTime @updatedAt
 }

@@ -1,17 +1,77 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { FEATURES } from "@/lib/constants";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { 
+  Shield, 
+  Users, 
+  Trophy, 
+  Zap, 
+  Heart, 
+  Star, 
+  Clock, 
+  MapPin, 
+  Smile, 
+  CheckCircle 
+} from "lucide-react";
 
-export function Features() {
+// 1. İKON HARİTASI (İsim -> Bileşen)
+// Buraya eklediğin her ikonu Admin panelinde de tanımlayacağız.
+const ICON_MAP: any = {
+  Shield, 
+  Users, 
+  Trophy, 
+  Zap, 
+  Heart, 
+  Star, 
+  Clock, 
+  MapPin, 
+  Smile,
+  CheckCircle
+};
+
+// 2. VARSAYILAN VERİLER (Fallback)
+// Veritabanı boşsa burası çalışır.
+const DEFAULT_FEATURES = [
+  { 
+    icon: "Shield", 
+    title: "Tam Güvenlik", 
+    description: "Derslerde en üst düzey koruma ekipmanları ve güvenli sürüş teknikleri önceliğimizdir." 
+  },
+  { 
+    icon: "Users", 
+    title: "Birebir İlgi", 
+    description: "Her öğrencinin seviyesine ve öğrenme hızına uygun, kişiselleştirilmiş antrenman programı." 
+  },
+  { 
+    icon: "Trophy", 
+    title: "Profesyonel Teknik", 
+    description: "10 yıllık deneyimle, temelden ileri seviyeye doğru teknikleri en doğru şekilde öğrenin." 
+  },
+  { 
+    icon: "Zap", 
+    title: "Hızlı İlerleme", 
+    description: "Özel metodolojimiz sayesinde, düşme korkusunu yenip kısa sürede şehre karışın." 
+  },
+];
+
+interface FeaturesProps {
+  features?: {
+    id: string;
+    icon: string;
+    title: string;
+    description: string;
+  }[] | null;
+}
+
+export function Features({ features }: FeaturesProps) {
+  // Veri kontrolü: Veritabanından geleni al, yoksa varsayılanı kullan
+  const displayFeatures = (features && features.length > 0) ? features : DEFAULT_FEATURES;
+
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -21,11 +81,12 @@ export function Features() {
 
   return (
     <section id="features" className="py-24 bg-white relative overflow-hidden">
-      
+      {/* Arka Plan Deseni */}
       <div className="absolute inset-0 bg-[url('/grid-pattern.svg')] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))] opacity-5 pointer-events-none"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         
+        {/* Başlık Bölümü */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -46,12 +107,14 @@ export function Features() {
             className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-6"
           >
             Sadece Paten Kaymayı Değil, <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-purple-500">
+            {/* DÜZELTME: bg-gradient-to-r kullanıldı */}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-500">
               Güvenle Özgürleşmeyi Öğretiyorum
             </span>
           </motion.h2>
         </div>
 
+        {/* Kartlar Grid */}
         <motion.div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
           variants={containerVariants}
@@ -59,8 +122,10 @@ export function Features() {
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
         >
-          {FEATURES.map((item, index) => {
-            const Icon = item.icon;
+          {displayFeatures.map((item, index) => {
+            // String isminden İkon Bileşenini buluyoruz. Bulamazsa 'Zap' ikonunu koyar.
+            const Icon = ICON_MAP[item.icon] || Zap;
+            
             return (
               <motion.div key={index} variants={itemVariants}>
                 <Card className="h-full border border-gray-100 bg-white hover:border-indigo-100 hover:shadow-xl hover:shadow-indigo-100/50 transition-all duration-300 group cursor-default">
@@ -75,7 +140,8 @@ export function Features() {
                     </h3>
 
                     <p className="text-gray-500 text-sm leading-relaxed">
-                      {item.desc}
+                      {/* ARTIK SADECE DESCRIPTION KULLANIYORUZ */}
+                      {item.description}
                     </p>
 
                   </CardContent>
@@ -85,7 +151,7 @@ export function Features() {
           })}
         </motion.div>
 
-
+        {/* Alt Not */}
         <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}

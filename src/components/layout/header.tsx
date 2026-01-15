@@ -32,13 +32,13 @@ const NAV_ITEMS = [
   { href: "#about", label: "Hakkımda", icon: User },
   { href: "#courses", label: "Ders Paketleri", icon: Package },
   { href: "#features", label: "Neden Ben?", icon: Zap },
-  { href: "#contact", label: "İletişim", icon: MessageCircle },
   { href: "#gallery", label: "Galeri", icon: Image },
+  { href: "#contact", label: "İletişim", icon: MessageCircle },
 ];
 
 export function Header() {
   const pathname = usePathname();
-  if (pathname.startsWith("/admin")) {
+  if (pathname.startsWith("/admin") || pathname.startsWith("/login")) {
     return null;
   }
   return (
